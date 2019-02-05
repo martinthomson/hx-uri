@@ -1,7 +1,7 @@
 ---
 title: Identifying HTTP Messages with URIs
 abbrev: HTTP Message URIs
-docname: draft-thomson-http-message-uri
+docname: draft-thomson-http-hx-uri-latest
 category: exp
 
 ipr: trust200902
