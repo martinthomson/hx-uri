@@ -53,15 +53,15 @@ exchanges that contain URIs and further dereferencing them.
 
 In this hypothetical example, a client wishes to find and update a resource.
 
-```
+~~~
 POST /find-object?name=example HTTP/1.1
 Host: example.com
 
-```
+~~~
 
 The server creates a resource and provides its location in a response:
 
-```
+~~~
 HTTP/1.1 201 Created
 Location: https://example.com/roZ2ITW
 Content-Type: example/example+json
@@ -71,28 +71,28 @@ Content-Type: example/example+json
   "name": "example",
   "items": { "a": 1, "b": 2 }
 }
-```
+~~~
 
 After receiving the identity of the resource, the client can then interact with
 that resource, here copying the value of "b" to a new key called "c":
 
-```
+~~~
 POST /roZ2ITW HTTP/1.1
 Host: example.com
 
 add_item: c=2
-```
+~~~
 
 With an `hx` URI, and support from the server, the client can send the second
 request at the same time as the first, relying on the server to dereference the
 `hx` URI:
 
-```
+~~~
 POST hxr:///0/a/h/location?201 HTTP/1.1
 Host: example.com
 
 add_item: c=@hx:///0/a/b?ct=example%2fexample+json#/items/b
-```
+~~~
 
 If the server understands the `hxr` URI scheme, it dereferences that URI to
 determine the target of the request.  The value from /items/b (using JSON
@@ -132,46 +132,46 @@ exchange, as a decimal number.  For instance, assuming that the authority
 `b5dd5901aef3f33de572` refers to an HTTP/2 connection, the following URI
 identifies entire exchange on stream 7 of that connection (see {{exchange}}).
 
-```
+~~~
 hx://b5dd5901aef3f33de572/7
-```
+~~~
 
 Adding additional path elements narrows this to refer to the request (see
 {{target}}):
 
-```
+~~~
 hx://b5dd5901aef3f33de572/7/q
-```
+~~~
 
 Further path elements allow components of a message to be identified, such as a
 Location header field value (see {{component-header-field}}):
 
-```
+~~~
 hx://b5dd5901aef3f33de572/7/a/h/location
-```
+~~~
 
 To ensure that the Location header field is only used if the request resulted in
 the creation of a new resource (that is, the response had a 201 (Created) status
 code), conditions can be added to the URI as query parameters:
 
-```
+~~~
 hx://b5dd5901aef3f33de572/7/a/h/location?201
-```
+~~~
 
 A fragment can be used if the content has an associated content type, which is
 generally only possible for the body of a request or response:
 
-```
+~~~
 hx://b5dd5901aef3f33de572/7/a/b#title
-```
+~~~
 
 How a fragment is used depends on the content type of the identified resource,
 so a condition might be added to specify the content type of the target
 resource:
 
-```
+~~~
 hx://b5dd5901aef3f33de572/7/a/b?ct=text%2Fhtml#title
-```
+~~~
 
 The `hxr` URI scheme is identical to `hx` except that it is dereferenced twice.
 An hxr reference can therefore be used where a URI would otherwise be used,
@@ -195,9 +195,9 @@ Base 16 {{!RFC4648}}) to produce a 20 character authority.
 The authority can be omitted where the URI is exchanged over the same
 connection.  The current connection is used if an authority is absent.
 
-```
+~~~
 hx:///7
-```
+~~~
 
 The userinfo and port components of an `hx` or `hxr` URI MUST NOT be used.  Any
 URI with userinfo or port components is invalid.
@@ -217,11 +217,11 @@ push, see {{exchange-push}}.
 An `hx` or `hxr` URI always includes fields that identify a request.  Thus, the
 following URIs are incomplete and therefore invalid:
 
-```
+~~~
 hx://
 hx:///
 hx://b5dd5901aef3f33de572/
-```
+~~~
 
 
 ## Identifying HTTP/1.1 Exchanges {#exchange11}
@@ -253,9 +253,9 @@ server pushes use identifiers that are whole multiples of 4.
 A server push exchange is identified by a "p" prefix followed by a decimal
 value.  For example:
 
-```
+~~~
 hx:///p6
-```
+~~~
 
 In HTTP/2, a stream identifier is sufficient to distinguish between requests and
 server pushes.  Thus, identifying a server push is possible even if the "p"
@@ -285,18 +285,18 @@ complete exchange.
 A request is identified by adding "/q" to a URI identifying an exchange.  For
 example:
 
-```
+~~~
 hx://546c9bce274b06cf859d/84/q
-```
+~~~
 
 ## Identifying a Response {#target-response}
 
 A request is identified by adding "/a" to a URI identifying an exchange.  For
 example:
 
-```
+~~~
 hx://18660225619af2c6c300/173/a
-```
+~~~
 
 
 ## Redirections
@@ -359,19 +359,19 @@ For example, the following `hx` URIs refer to the third 103 response, the last
 informational response containing a Link header field, and all informational
 responses respectively.
 
-```
+~~~
 hx:///71/a/i/2?103
 hx:///71/a/i/@?h=link
 hx:///71/a/i/*
-```
+~~~
 
 The path components "/s" ({{component-status}}) or "/h" ({{component-header}})
 can be used to select parts of an informational response.  For example, all Link
 header fields from informational responses can be collected with:
 
-```
+~~~
 hx:///10/a/i/*/h/link/*
-```
+~~~
 
 
 ## Identifying a Message Header {#component-header}
@@ -416,9 +416,9 @@ for specification of URIs that are conditional on details of the HTTP exchange.
 For example, the following URI will not produce a result if the request is not
 successful, ensuring that the body of a response like 503 is not used:
 
-```
+~~~
 hx://b5dd5901aef3f33de572/7/a/b?2xx
-```
+~~~
 
 Conditions are separated by the ampersand ("&") character.  Each comprises a
 label that identifies the type of the condition, and an optional value.  The
@@ -444,9 +444,9 @@ multiple informational responses.  The Link Relation Type condition
 ({{condition-rel}}) might be used to select all link relations of a given type
 across all informational responses.
 
-```
+~~~
 hx:///29/a/i/*/h/link/*?rel=start
-```
+~~~
 
 
 ## Percent-Encoding of Condition Values {#condition-pct-encoding}
@@ -471,9 +471,9 @@ A condition that contains a numeral and two "x" characters evaluates to true if
 the status code is from the identified class.  For instance, the following
 identifies a request that was redirected:
 
-```
+~~~
 hx:///22/q?3xx
-```
+~~~
 
 A condition that specifies an informational status code (1xx) will be true if an
 informational response of that type was present.  It does not result in limiting
@@ -507,16 +507,16 @@ identies the header, then only header fields are used to match.
 Thus, to identify a request if it contains a User-Agent header field with any
 value, the following might be used:
 
-```
+~~~
 hx:///30/q?h=user-agent
-```
+~~~
 
 To select a response body only if it indicates that requests for byte ranges are
 supported, the following might be used:
 
-```
+~~~
 hx:///71/a/b?h=accept-ranges=bytes
-```
+~~~
 
 Alternative forms of matching aside from equality might be provided in future.
 
@@ -547,7 +547,7 @@ this condition.
 In ABNF {{!RFC5234}}, the `hx` URI scheme can be described as a narrow profile
 of that defined in {{!URI=RFC3986}}.
 
-```
+~~~
 hx-URI = "hx://" [ hx-authority ] hx-exchange
          [ hx-target ] [ hx-conditions ]
 hx-authority = 20HEXDIG
@@ -580,7 +580,7 @@ hx-ct-cond = "ct=" hx-pct-encoded
 hx-extension-cond = hx-token [ "=" hx-pct-encoded ]
 
 hx-pct-encoded = *( hx-token-char / ("%" 2HEXDIG) )
-```
+~~~
 
 <!--
 hx-token could use the token rule from HTTP, but that would make this grammar
@@ -595,7 +595,7 @@ The `hxr` URI scheme uses the same basic grammar as the `hx` URI scheme.
 However, since this can only ever reference parts of an exchange that could
 contain a URI, the grammar is more narrowly defined.
 
-```
+~~~
 hxr-URI = "hxr://" [ hx-authority ] "/" hx-exchange
          hxr-target [ "?" hx-conditions ]
 
@@ -608,7 +608,7 @@ hxr-component = hx-uri / hxr-info
 hxr-info = "/i/" hx-index hxr-header
 hxr-header = "/h/" hx-token [ "/" hx-index ]
 hxr-trailer = "/t/" hx-token
-```
+~~~
 
 The main difference between the `hx` and `hxr` schemes is that `hxr` URIs
 contain a narrower set of possible values, omitting all means of identifying
