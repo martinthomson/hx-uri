@@ -1,6 +1,6 @@
 ---
-title: Identifying HTTP Messages with URIs
-abbrev: HTTP Message URIs
+title: Identifying HTTP Exchanges with URIs
+abbrev: HTTP Exchange URIs
 docname: draft-thomson-http-hx-uri-latest
 category: exp
 
@@ -33,7 +33,8 @@ It is common for applications that use HTTP {{!HTTP=I-D.ietf-httpbis-semantics}}
 to use a "follow your nose" design.  In this design, clients make requests to
 discover or create resources and to learn information about resources they are
 interested in.  Once the identity of resources is learned, clients then interact
-with those resources.
+with those resources.  This process is often iterative, with clients following
+multiple links to reach resources of interest.
 
 A negative consequence of these designs is that the discovery or creation steps
 add latency to any operation that depends on the identity of resources.
@@ -45,16 +46,16 @@ request by reference, then the application might save a round trip for every
 such occurrence.
 
 The `hx` URI scheme identifies components of HTTP exchanges.  The `hxr` URI
-scheme provides for further indirection, dereferencing components of HTTP
-exchanges that contain URIs and further dereferencing them.
+scheme provides for further indirection, allowing the dereferencing of URLs in
+identified HTTP exchanges.
 
 
 ## Example
 
-In this hypothetical example, a client wishes to find and update a resource.
+In this simple example, a client wishes to create and then update a resource.
 
 ~~~
-POST /find-object?name=example HTTP/1.1
+POST /make-object?name=example HTTP/1.1
 Host: example.com
 
 ~~~
@@ -85,7 +86,7 @@ add_item: c=2
 
 With an `hx` URI, and support from the server, the client can send the second
 request at the same time as the first, relying on the server to dereference the
-`hx` URI:
+`hxr` URI:
 
 ~~~
 POST hxr:///0/a/h/location?201 HTTP/1.1
@@ -158,8 +159,9 @@ code), conditions can be added to the URI as query parameters:
 hx://b5dd5901aef3f33de572/7/a/h/location?201
 ~~~
 
-A fragment can be used if the content has an associated content type, which is
-generally only possible for the body of a request or response:
+A fragment can be used if the content has an associated content type that
+supports fragment identifiers, which is generally only possible for the body of
+a request or response:
 
 ~~~
 hx://b5dd5901aef3f33de572/7/a/b#title
@@ -174,9 +176,9 @@ hx://b5dd5901aef3f33de572/7/a/b?ct=text%2Fhtml#title
 ~~~
 
 The `hxr` URI scheme is identical to `hx` except that it is dereferenced twice.
-An hxr reference can therefore be used where a URI would otherwise be used,
-taking the value of the URI from the identified field in the identified
-exchange.
+A reference that uses the `hxr` scheme can therefore be used where a URI would
+otherwise be used, taking the value of the URI from chosen part of the
+identified exchange.
 
 
 # Authority
@@ -189,10 +191,11 @@ The process for generating a unique identifier uses TLS exporters (see Section
 use TLS cannot be identified using `hx` or `hxr` URIs.
 
 A TLS exporter with the label "EXPORTER-hx-authority" and an empty context is
-used to produce a 10 octet value.  This value is then encoded in hexadecimal (or
-Base 16 {{!RFC4648}}) to produce a 20 character authority.
+used to produce a 10 octet value.  This value is then encoded in hexadecimal
+(that is, Base 16 {{!RFC4648}}) to produce a 20 character authority.
 
-The authority can be omitted where the URI is exchanged over the same
+The authority can be omitted where the identity of the connection can be
+inferred from context.  For instance, where the URI is sent over the same
 connection.  The current connection is used if an authority is absent.
 
 ~~~
@@ -214,8 +217,8 @@ depends on the version of HTTP in use.
 A single "p" character followed by a decimal value is used to identify a server
 push, see {{exchange-push}}.
 
-An `hx` or `hxr` URI always includes fields that identify a request.  Thus, the
-following URIs are incomplete and therefore invalid:
+An `hx` or `hxr` URI always includes fields that identify an exchange.  For
+instance, the following URIs are incomplete and therefore invalid:
 
 ~~~
 hx://
@@ -305,10 +308,18 @@ An `hx` or `hxr` URI applies to a single exchange over a single connection.  If
 a 3xx status code results in a client following a redirect, that exchange is
 identified separately.
 
+
 # Identifying Request or Response Components {#component}
 
 After identifying a single message, additional path components can be used to
 identify parts of the message.
+
+TBD:
+
+: It might make sense to put "/m", "/u", "/s", and "/i" as peers to "/q" and
+  "/a" rather than attaching them underneath.  The primary advantage would be a
+  shorter identifier.  (Doing this for "/i" alone might work, as that is more of
+  a peer to "/a".)
 
 
 ## Identifying the Request Method {#component-method}
@@ -352,6 +363,13 @@ responses each using a number 1 greater than the last.  A value of "@" is used
 to identify the last informational response and a value of "*" identifies all
 informational responses.
 
+TBD:
+
+: Indexing is a little strange given the use case here.  The problem lies in
+  working out what to do with multiple entries.  Maybe the right answer is to
+  allow for selecting just the first, last, or all items.  That would simplify
+  the scheme a little.
+
 Indexing applies after any conditions are applied (see {{condition}}), allowing
 a URI to identify single informational response.
 
@@ -387,9 +405,9 @@ Without additional path elements, this form is only valid for an `hx` URI; an
 
 ## Identifying a Message Trailer {#component-trailer}
 
-A path component of "/h" identifies the header of a message as a whole.  Without
-additional path elements, this form is only valid for an `hx` URI; an `hxr` URI
-requires that specific header fields be identified.
+A path component of "/t" specifically identifies the trailer of a message.
+Trailers are subject to the same restrictions as headers with the additional
+condition that they can't be present on informational responses.
 
 
 ## Identifying Header Field Values {#component-header-field}
@@ -403,6 +421,19 @@ responses are indexed (see {{component-informational}}).  All values from the
 message are identified by "*".  A decimal value indicates a 0-based index into
 values.  The last value is identified by "@".
 
+Values that use the HTTP list construction are not indexed by instances of the
+header field, but by the comma-separated values that are present.  Empty values
+or those containing only whitespace are skipped and cannot be indexed.
+
+To illustrate this, there are 4 values that can be indexed in the following
+HTTP/1.1 example. The third value is "3" and the last ("/@") is "4".
+
+~~~
+Example: 1
+Example: 2, ,3
+Example: ,4,
+~~~
+
 As a special case, an `hxr` URI that refers to the value of a Link header field
 {{!LINK=RFC8288}} can be used as a reference.
 
@@ -413,8 +444,9 @@ The query string of an `hx` URI carries a set of conditions.  Unless any
 conditions evaluate to true, the resolution of the URI will fail.  This allows
 for specification of URIs that are conditional on details of the HTTP exchange.
 
-For example, the following URI will not produce a result if the request is not
-successful, ensuring that the body of a response like 503 is not used:
+For example, the following URI cannot be dereferenced unless the response
+indicates success, ensuring that the body of an unwanted response like 503 is
+not used:
 
 ~~~
 hx://b5dd5901aef3f33de572/7/a/b?2xx
@@ -477,9 +509,14 @@ hx:///22/q?3xx
 
 A condition that specifies an informational status code (1xx) will be true if an
 informational response of that type was present.  It does not result in limiting
-the components that can be selected.  A URI that identifies a header field will
-resolve the final value of the header field, taking into account values from
-final responses and trailers as defined in {#component-header}.
+the components that can be selected.  Specific 100-series status codes can be
+used to limit which informational responses are selected if the "/i" path
+component is used (see {{component-informational}}).
+
+A URI that identifies a header field will resolve the final value of the header
+field unless a specific portion of the response is specified (using "/i" or
+"/t"), taking into account values from final responses and trailers as defined
+in {{component-header}}.
 
 This condition can be used to identify components of a request, conditional on
 the status code of the response.
@@ -528,10 +565,17 @@ matches the specified content type.  Acceptable values and rules for determining
 what values match follow the rules for the Accept header field (see Section
 8.4.2 of {{!HTTP}}).
 
+The response content type condition is identified by "ct" and is followed by a
+percent-encoded content type.  For example:
+
+~~~
+hx:///12/a/b?ct=text%2Fhtml
+~~~
+
 Unlike the header field condition ({{condition-header}}), the response content
 type condition can be used with URIs that identify components of a request.  In
 that case, it indicates that the identification is conditional on the content
-type of the response.
+type of the response (not the request).
 
 Separator characters ("/", ";" and ",") MUST be percent-encoded in the value of
 this condition.
@@ -539,7 +583,19 @@ this condition.
 
 ## Link Relation Condition {#condition-rel}
 
+A link relation condition filters results by those that contain a link relation
+{{!LINK=RFC8288}} of the specified type.
 
+The link relation condition is identified by "rel" and is followed by a link
+relation type.  Link relations that include non-token characters, such as those
+that use the URL form, MUST be percent-encoded.
+
+If the target is a request, response, informational response, or component that
+contains header fields, only those messages or parts of messages that contain a
+link relation of the specified type are selected.
+
+If the target is a Link header field, then only link relations of the identified
+type are selected.  Deferencing fails if any other header field is identified.
 
 
 # hx URI Grammar {#grammar-hx}
@@ -565,7 +621,7 @@ hx-info = "/i/" hx-index [ hx-status / hx-header ]
 hx-status = "/s"
 hx-header = "/h" [ "/" hx-token [ "/" hx-index ] ]
 hx-body = "/b"
-hx-trailer = "/t" [ "/" hx-token ]
+hx-trailer = "/t" [ "/" hx-token [ "/" hx-index ] ]
 
 hx-index = 1*DIGIT / "@" / "*"
 hx-token = 1*hx-token-char
@@ -607,7 +663,7 @@ hxr-component = hx-uri / hxr-info
               / hxr-header / hx-body / hxr-trailer
 hxr-info = "/i/" hx-index hxr-header
 hxr-header = "/h/" hx-token [ "/" hx-index ]
-hxr-trailer = "/t/" hx-token
+hxr-trailer = "/t/" hx-token [ "/" hx-index ]
 ~~~
 
 The main difference between the `hx` and `hxr` schemes is that `hxr` URIs
@@ -695,8 +751,12 @@ Reference:
 
 ## TLS Exporter Registration {#iana-exporter}
 
+TODO
+
 
 ## hx and hxr URI Scheme Registries {#iana-registries}
+
+TODO considering setting up registries for various bits of the syntax.
 
 
 --- back
