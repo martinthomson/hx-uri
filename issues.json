@@ -1,0 +1,58 @@
+[
+
+  {
+    "url": "https://api.github.com/repos/martinthomson/hx-uri/issues/1",
+    "repository_url": "https://api.github.com/repos/martinthomson/hx-uri",
+    "labels_url": "https://api.github.com/repos/martinthomson/hx-uri/issues/1/labels{/name}",
+    "comments_url": "https://api.github.com/repos/martinthomson/hx-uri/issues/1/comments",
+    "events_url": "https://api.github.com/repos/martinthomson/hx-uri/issues/1/events",
+    "html_url": "https://github.com/martinthomson/hx-uri/pull/1",
+    "id": 417945302,
+    "node_id": "MDExOlB1bGxSZXF1ZXN0MjU4ODI5Mjcw",
+    "number": 1,
+    "title": "Fix some apparent typos",
+    "user": {
+      "login": "jyasskin",
+      "id": 83420,
+      "node_id": "MDQ6VXNlcjgzNDIw",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/83420?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/jyasskin",
+      "html_url": "https://github.com/jyasskin",
+      "followers_url": "https://api.github.com/users/jyasskin/followers",
+      "following_url": "https://api.github.com/users/jyasskin/following{/other_user}",
+      "gists_url": "https://api.github.com/users/jyasskin/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/jyasskin/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/jyasskin/subscriptions",
+      "organizations_url": "https://api.github.com/users/jyasskin/orgs",
+      "repos_url": "https://api.github.com/users/jyasskin/repos",
+      "events_url": "https://api.github.com/users/jyasskin/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/jyasskin/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "labels": [
+
+    ],
+    "state": "closed",
+    "locked": false,
+    "assignee": null,
+    "assignees": [
+
+    ],
+    "milestone": null,
+    "comments": 1,
+    "created_at": "2019-03-06T18:23:06Z",
+    "updated_at": "2019-03-06T21:46:48Z",
+    "closed_at": "2019-03-06T21:46:48Z",
+    "author_association": "CONTRIBUTOR",
+    "pull_request": {
+      "url": "https://api.github.com/repos/martinthomson/hx-uri/pulls/1",
+      "html_url": "https://github.com/martinthomson/hx-uri/pull/1",
+      "diff_url": "https://github.com/martinthomson/hx-uri/pull/1.diff",
+      "patch_url": "https://github.com/martinthomson/hx-uri/pull/1.patch"
+    },
+    "body": ""
+  }
+
+]
