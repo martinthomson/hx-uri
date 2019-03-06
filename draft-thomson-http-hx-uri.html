@@ -1,0 +1,984 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head profile="http://www.w3.org/2006/03/hcard http://dublincore.org/documents/2008/08/04/dc-html/">
+  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
+
+  <title>Identifying HTTP Exchanges with URIs</title>
+
+  
+<style type="text/css">/*<![CDATA[*/
+
+body {
+  font: 16px "Helvetica Neue","Open Sans",Helvetica,Calibri,sans-serif;
+  color: #333;
+  font-size-adjust: 0.5;
+  line-height: 24px;
+  margin: 75px auto;
+  max-width: 624px;
+  padding: 0 5px;
+}
+
+.title, .filename, h1, h2, h3, h4, h5 {
+  font: 16px "Roboto Condensed","Helvetica Neue","Open Sans",Helvetica,Calibri,sans-serif;
+  font-size-adjust: 0.5;
+  font-weight: bold;
+  color: #333;
+  line-height: 100%;
+  margin: 1.2em 0 0.3em;
+}
+.title, #rfc\.title h1 { font-size: 32px; }
+h1, section h1, h2, section h2, section h3, nav h2 { font-size: 20px; }
+h3, section h4, h4, section h5 { font-size: 16px; }
+h1 a[href], h2 a[href], h3 a[href], h4 a[href] {
+  color: #333;
+}
+
+table {
+  margin-left: 0em;
+  border-collapse: collapse;
+}
+th {
+  text-align: left;
+  border-bottom: 2px solid #ddd;
+}
+td {
+  border-top: 1px solid #ddd;
+  vertical-align: top;
+}
+tr:nth-child(2n+1) > td,
+tr:nth-child(2n+1) > th {
+  background-color: #f9f9f9;
+}
+td.reference {
+  max-width: 200px;
+  border-top: none;
+  padding-right: 1em;
+}
+.right {
+  text-align: right;
+}
+
+
+table.header, table#rfc\.headerblock {
+  width: 100%;
+}
+table.header td, table#rfc\.headerblock td {
+  border: none;
+  background-color: transparent;
+  color: black;
+  padding: 0;
+}
+.filename {
+  display: block;
+  color: rgb(119, 119, 119);
+  font-size: 20px;
+  font-weight: normal;
+  line-height: 100%;
+  margin: 10px 0 32px;
+}
+#rfc\.abstract+p, #rfc\.abstract p {
+  font-size: 20px;
+  line-height: 28px;
+}
+
+samp, tt, code, pre, span.tt {
+  font: 13.5px Consolas, monospace;
+  font-size-adjust: none;
+}
+pre {
+  background-color: #eee;
+  border: 1px solid #ddd;
+  overflow-x: auto;
+  padding: 5px;
+  margin: 5px;
+}
+.figure, caption {
+  font-style: italic;
+  margin: 0 1.5em;
+  text-align: left;
+}
+
+address {
+  margin: 16px 2px;
+  line-height: 20px;
+}
+.vcard {
+  font-style: normal;
+}
+.vcardline {
+  display: block;
+}
+.vcardline .fn, address b {
+  font-weight: normal;
+}
+.vcardline .hidden {
+  display: none;
+}
+
+dl {
+  margin-left: 1em;
+}
+dl.dl-horizontal: {
+  margin-left: 0;
+}
+dl > dt {
+  float: left;
+  margin-right: 1em;
+}
+dl.nohang > dt {
+  float: none;
+}
+dl > dd {
+  margin-bottom: .5em;
+}
+dl.compact > dd {
+  margin-bottom: 0em;
+}
+dl > dd > dl {
+  margin-top: 0.5em;
+  margin-bottom: 0em;
+}
+ul.empty {
+  list-style-type: none;
+}
+ul.empty li {
+  margin-top: .5em;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid #eee;
+}
+hr.noprint {
+  display: none;
+}
+
+a {
+  text-decoration: none;
+}
+a[href] {
+  color: #2a6496;
+}
+a[href]:hover {
+  background-color: #eee;
+}
+
+p, ol, ul, li {
+  padding: 0;
+}
+p {
+  margin: 0.5em 0;
+}
+ol, ul {
+  margin: 0.2em 0 0.2em 2em;
+}
+li {
+  margin: 0.2em 0;
+}
+address {
+  font-style: normal;
+}
+
+ul.toc ul {
+  margin: 0 0 0 2em;
+}
+ul.toc li {
+  list-style: none;
+  margin: 0;
+}
+
+@media screen and (min-width: 924px) {
+  body {
+    padding-right: 350px;
+  }
+  body>ul.toc, body>#rfc\.toc {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    right: calc(50vw - 500px);
+    width: 300px;
+    z-index: 1;
+    overflow: auto;
+    overscroll-behavior: contain;
+  }
+  body>#rfc\.toc {
+    top: 55px;
+  }
+  body>ul.toc {
+    top: 100px;
+  }
+
+  ul.toc {
+    margin: 0 0 0 4px;
+    font-size: 12px;
+    line-height: 20px;
+  }
+  ul.toc ul {
+    margin-left: 1.2em;
+  }
+}
+
+.github-fork-ribbon-wrapper {
+  display: none;
+}
+@media screen and (min-width: 800px) {
+  /* "Fork me on GitHub" CSS ribbon based on
+   * https://github.com/simonwhitaker/github-fork-ribbon-css
+   */
+  .github-fork-ribbon {
+    position: absolute;
+    padding: 2px 0;
+    background-color: #a00;
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.15));
+    box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.5);
+    font: 700 12px "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+    pointer-events: auto;
+
+    top: 38px;
+    right: -45px;
+
+    transform: rotate(45deg);
+  }
+
+  .github-fork-ribbon a[href],
+  .github-fork-ribbon a[href]:hover {
+    color: #fff;
+    background-color: transparent;
+    text-decoration: none;
+    text-shadow: 0 -1px rgba(0, 0, 0, 0.5);
+    text-align: center;
+
+    width: 190px;
+    line-height: 18px;
+
+    display: inline-block;
+    padding: 2px 0;
+
+    border: 1.5px dotted #fff;
+    border-color: rgba(255, 255, 255, 0.6);
+  }
+
+  .github-fork-ribbon-wrapper {
+    display: block;
+    width: 130px;
+    height: 130px;
+    position: absolute;
+    overflow: hidden;
+    top: 0; right: 0;
+    z-index: 2;
+    pointer-events: none;
+  }
+}
+@media screen and (min-width: 1000px) {
+  .github-fork-ribbon-wrapper {
+    position: fixed;
+  }
+  /*]]>*/</style>
+  <meta name="viewport" content="initial-scale=1.0">
+
+
+  <link href="#rfc.toc" rel="Contents">
+<link href="#rfc.section.1" rel="Chapter" title="1 Introduction">
+<link href="#rfc.section.1.1" rel="Chapter" title="1.1 Example">
+<link href="#rfc.section.1.2" rel="Chapter" title="1.2 Conventions and Definitions">
+<link href="#rfc.section.1.3" rel="Chapter" title="1.3 Terminology">
+<link href="#rfc.section.2" rel="Chapter" title="2 Overview">
+<link href="#rfc.section.3" rel="Chapter" title="3 Authority">
+<link href="#rfc.section.4" rel="Chapter" title="4 Identifying an Exchange">
+<link href="#rfc.section.4.1" rel="Chapter" title="4.1 Identifying HTTP/1.1 Exchanges">
+<link href="#rfc.section.4.2" rel="Chapter" title="4.2 Identifying HTTP/2 Exchanges">
+<link href="#rfc.section.4.3" rel="Chapter" title="4.3 Identifiers HTTP/3 Exchanges">
+<link href="#rfc.section.4.4" rel="Chapter" title="4.4 Identifying Server Pushes">
+<link href="#rfc.section.5" rel="Chapter" title="5 Targets">
+<link href="#rfc.section.5.1" rel="Chapter" title="5.1 Identifying a Request">
+<link href="#rfc.section.5.2" rel="Chapter" title="5.2 Identifying a Response">
+<link href="#rfc.section.5.3" rel="Chapter" title="5.3 Redirections">
+<link href="#rfc.section.6" rel="Chapter" title="6 Identifying Request or Response Components">
+<link href="#rfc.section.6.1" rel="Chapter" title="6.1 Identifying the Request Method">
+<link href="#rfc.section.6.2" rel="Chapter" title="6.2 Identifying the Effective Request URI">
+<link href="#rfc.section.6.3" rel="Chapter" title="6.3 Identifying the Response Status">
+<link href="#rfc.section.6.4" rel="Chapter" title="6.4 Identifying the Message Body">
+<link href="#rfc.section.6.5" rel="Chapter" title="6.5 Informational (1xx) Responses">
+<link href="#rfc.section.6.6" rel="Chapter" title="6.6 Identifying a Message Header">
+<link href="#rfc.section.6.7" rel="Chapter" title="6.7 Identifying a Message Trailer">
+<link href="#rfc.section.6.8" rel="Chapter" title="6.8 Identifying Header Field Values">
+<link href="#rfc.section.7" rel="Chapter" title="7 Conditions">
+<link href="#rfc.section.7.1" rel="Chapter" title="7.1 Condition Processing Model">
+<link href="#rfc.section.7.2" rel="Chapter" title="7.2 Percent-Encoding of Condition Values">
+<link href="#rfc.section.7.3" rel="Chapter" title="7.3 Status Condition">
+<link href="#rfc.section.7.4" rel="Chapter" title="7.4 Header Field Value Condition">
+<link href="#rfc.section.7.5" rel="Chapter" title="7.5 Response Content Type Condition">
+<link href="#rfc.section.7.6" rel="Chapter" title="7.6 Link Relation Condition">
+<link href="#rfc.section.8" rel="Chapter" title="8 hx URI Grammar">
+<link href="#rfc.section.9" rel="Chapter" title="9 hxr URI Grammar">
+<link href="#rfc.section.10" rel="Chapter" title="10 Security Considerations">
+<link href="#rfc.section.11" rel="Chapter" title="11 IANA Considerations">
+<link href="#rfc.section.11.1" rel="Chapter" title="11.1 hx URI scheme Registration">
+<link href="#rfc.section.11.2" rel="Chapter" title="11.2 hxr URI scheme Registration">
+<link href="#rfc.section.11.3" rel="Chapter" title="11.3 TLS Exporter Registration">
+<link href="#rfc.section.11.4" rel="Chapter" title="11.4 hx and hxr URI Scheme Registries">
+<link href="#rfc.references" rel="Chapter" title="12 References">
+<link href="#rfc.references.1" rel="Chapter" title="12.1 Normative References">
+<link href="#rfc.references.2" rel="Chapter" title="12.2 Informative References">
+<link href="#rfc.acknowledgments" rel="Chapter">
+<link href="#rfc.authors" rel="Chapter">
+
+
+  <meta name="generator" content="xml2rfc version 2.19.1 - https://tools.ietf.org/tools/xml2rfc" />
+  <link rel="schema.dct" href="http://purl.org/dc/terms/" />
+
+  <meta name="dct.creator" content="Thomson, M." />
+  <meta name="dct.identifier" content="urn:ietf:id:draft-thomson-http-hx-uri-latest" />
+  <meta name="dct.issued" scheme="ISO8601" content="2019-03-06" />
+  <meta name="dct.abstract" content="URI schemes are defined that enable identification of HTTP exchanges, or parts of those exchanges." />
+  <meta name="description" content="URI schemes are defined that enable identification of HTTP exchanges, or parts of those exchanges." />
+
+</head>
+
+<body>
+
+  <table class="header">
+    <tbody>
+    
+    	<tr>
+<td class="left">HTTPbis</td>
+<td class="right">M. Thomson</td>
+</tr>
+<tr>
+<td class="left">Internet-Draft</td>
+<td class="right">Mozilla</td>
+</tr>
+<tr>
+<td class="left">Intended status: Experimental</td>
+<td class="right">March 06, 2019</td>
+</tr>
+<tr>
+<td class="left">Expires: September 7, 2019</td>
+<td class="right"></td>
+</tr>
+
+    	
+    </tbody>
+  </table>
+
+  <p class="title">Identifying HTTP Exchanges with URIs<br />
+  <span class="filename">draft-thomson-http-hx-uri-latest</span></p>
+  
+  <h1 id="rfc.abstract"><a href="#rfc.abstract">Abstract</a></h1>
+<p>URI schemes are defined that enable identification of HTTP exchanges, or parts of those exchanges.</p>
+<h1 id="rfc.status"><a href="#rfc.status">Status of This Memo</a></h1>
+<p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
+<p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at https://datatracker.ietf.org/drafts/current/.</p>
+<p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
+<p>This Internet-Draft will expire on September 7, 2019.</p>
+<h1 id="rfc.copyrightnotice"><a href="#rfc.copyrightnotice">Copyright Notice</a></h1>
+<p>Copyright (c) 2019 IETF Trust and the persons identified as the document authors.  All rights reserved.</p>
+<p>This document is subject to BCP 78 and the IETF Trust's Legal Provisions Relating to IETF Documents (https://trustee.ietf.org/license-info) in effect on the date of publication of this document.  Please review these documents carefully, as they describe your rights and restrictions with respect to this document.  Code Components extracted from this document must include Simplified BSD License text as described in Section 4.e of the Trust Legal Provisions and are provided without warranty as described in the Simplified BSD License.</p>
+
+  
+  <hr class="noprint" />
+  <h1 class="np" id="rfc.toc"><a href="#rfc.toc">Table of Contents</a></h1>
+  <ul class="toc">
+
+  	<li>1.   <a href="#rfc.section.1">Introduction</a>
+</li>
+<ul><li>1.1.   <a href="#rfc.section.1.1">Example</a>
+</li>
+<li>1.2.   <a href="#rfc.section.1.2">Conventions and Definitions</a>
+</li>
+<li>1.3.   <a href="#rfc.section.1.3">Terminology</a>
+</li>
+</ul><li>2.   <a href="#rfc.section.2">Overview</a>
+</li>
+<li>3.   <a href="#rfc.section.3">Authority</a>
+</li>
+<li>4.   <a href="#rfc.section.4">Identifying an Exchange</a>
+</li>
+<ul><li>4.1.   <a href="#rfc.section.4.1">Identifying HTTP/1.1 Exchanges</a>
+</li>
+<li>4.2.   <a href="#rfc.section.4.2">Identifying HTTP/2 Exchanges</a>
+</li>
+<li>4.3.   <a href="#rfc.section.4.3">Identifiers HTTP/3 Exchanges</a>
+</li>
+<li>4.4.   <a href="#rfc.section.4.4">Identifying Server Pushes</a>
+</li>
+</ul><li>5.   <a href="#rfc.section.5">Targets</a>
+</li>
+<ul><li>5.1.   <a href="#rfc.section.5.1">Identifying a Request</a>
+</li>
+<li>5.2.   <a href="#rfc.section.5.2">Identifying a Response</a>
+</li>
+<li>5.3.   <a href="#rfc.section.5.3">Redirections</a>
+</li>
+</ul><li>6.   <a href="#rfc.section.6">Identifying Request or Response Components</a>
+</li>
+<ul><li>6.1.   <a href="#rfc.section.6.1">Identifying the Request Method</a>
+</li>
+<li>6.2.   <a href="#rfc.section.6.2">Identifying the Effective Request URI</a>
+</li>
+<li>6.3.   <a href="#rfc.section.6.3">Identifying the Response Status</a>
+</li>
+<li>6.4.   <a href="#rfc.section.6.4">Identifying the Message Body</a>
+</li>
+<li>6.5.   <a href="#rfc.section.6.5">Informational (1xx) Responses</a>
+</li>
+<li>6.6.   <a href="#rfc.section.6.6">Identifying a Message Header</a>
+</li>
+<li>6.7.   <a href="#rfc.section.6.7">Identifying a Message Trailer</a>
+</li>
+<li>6.8.   <a href="#rfc.section.6.8">Identifying Header Field Values</a>
+</li>
+</ul><li>7.   <a href="#rfc.section.7">Conditions</a>
+</li>
+<ul><li>7.1.   <a href="#rfc.section.7.1">Condition Processing Model</a>
+</li>
+<li>7.2.   <a href="#rfc.section.7.2">Percent-Encoding of Condition Values</a>
+</li>
+<li>7.3.   <a href="#rfc.section.7.3">Status Condition</a>
+</li>
+<li>7.4.   <a href="#rfc.section.7.4">Header Field Value Condition</a>
+</li>
+<li>7.5.   <a href="#rfc.section.7.5">Response Content Type Condition</a>
+</li>
+<li>7.6.   <a href="#rfc.section.7.6">Link Relation Condition</a>
+</li>
+</ul><li>8.   <a href="#rfc.section.8">hx URI Grammar</a>
+</li>
+<li>9.   <a href="#rfc.section.9">hxr URI Grammar</a>
+</li>
+<li>10.   <a href="#rfc.section.10">Security Considerations</a>
+</li>
+<li>11.   <a href="#rfc.section.11">IANA Considerations</a>
+</li>
+<ul><li>11.1.   <a href="#rfc.section.11.1">hx URI scheme Registration</a>
+</li>
+<li>11.2.   <a href="#rfc.section.11.2">hxr URI scheme Registration</a>
+</li>
+<li>11.3.   <a href="#rfc.section.11.3">TLS Exporter Registration</a>
+</li>
+<li>11.4.   <a href="#rfc.section.11.4">hx and hxr URI Scheme Registries</a>
+</li>
+</ul><li>12.   <a href="#rfc.references">References</a>
+</li>
+<ul><li>12.1.   <a href="#rfc.references.1">Normative References</a>
+</li>
+<li>12.2.   <a href="#rfc.references.2">Informative References</a>
+</li>
+</ul><li><a href="#rfc.acknowledgments">Acknowledgments</a>
+</li>
+<li><a href="#rfc.authors">Author's Address</a>
+</li>
+
+
+  </ul>
+
+  <h1 id="rfc.section.1">
+<a href="#rfc.section.1">1.</a> <a href="#introduction" id="introduction">Introduction</a>
+</h1>
+<p id="rfc.section.1.p.1">It is common for applications that use HTTP <a href="#HTTP" class="xref">[HTTP]</a> to use a &#8220;follow your nose&#8221; design.  In this design, clients make requests to discover or create resources and to learn information about resources they are interested in.  Once the identity of resources is learned, clients then interact with those resources.  This process is often iterative, with clients following multiple links to reach resources of interest.</p>
+<p id="rfc.section.1.p.2">A negative consequence of these designs is that the discovery or creation steps add latency to any operation that depends on the identity of resources.</p>
+<p id="rfc.section.1.p.3">For applications that use well-defined formats, though the result of a request might be unknown, an application might have reliable knowledge about the form of the response.  If components of that answer could be incorporated into another request by reference, then the application might save a round trip for every such occurrence.</p>
+<p id="rfc.section.1.p.4">The <samp>hx</samp> URI scheme identifies components of HTTP exchanges.  The <samp>hxr</samp> URI scheme provides for further indirection, allowing the dereferencing of URLs in identified HTTP exchanges.</p>
+<h1 id="rfc.section.1.1">
+<a href="#rfc.section.1.1">1.1.</a> <a href="#example" id="example">Example</a>
+</h1>
+<p id="rfc.section.1.1.p.1">In this simple example, a client wishes to create and then update a resource.</p>
+<pre>
+POST /make-object?name=example HTTP/1.1
+Host: example.com
+
+</pre>
+<p id="rfc.section.1.1.p.2">The server creates a resource and provides its location in a response:</p>
+<pre>
+HTTP/1.1 201 Created
+Location: https://example.com/roZ2ITW
+Content-Type: example/example+json
+
+{
+  "uri": "https://example.com/roZ2ITW",
+  "name": "example",
+  "items": { "a": 1, "b": 2 }
+}
+</pre>
+<p id="rfc.section.1.1.p.3">After receiving the identity of the resource, the client can then interact with that resource, here copying the value of &#8220;b&#8221; to a new key called &#8220;c&#8221;:</p>
+<pre>
+POST /roZ2ITW HTTP/1.1
+Host: example.com
+
+add_item: c=2
+</pre>
+<p id="rfc.section.1.1.p.4">With an <samp>hx</samp> URI, and support from the server, the client can send the second request at the same time as the first, relying on the server to dereference the <samp>hxr</samp> URI:</p>
+<pre>
+POST hxr:///0/a/h/location?201 HTTP/1.1
+Host: example.com
+
+add_item: c=@hx:///0/a/b?ct=example%2fexample+json#/items/b
+</pre>
+<p id="rfc.section.1.1.p.5">If the server understands the <samp>hxr</samp> URI scheme, it dereferences that URI to determine the target of the request.  The value from /items/b (using JSON Pointer <a href="#RFC6901" class="xref">[RFC6901]</a>) is copied using the <samp>hx</samp> URI scheme.</p>
+<p id="rfc.section.1.1.p.6">Note that it can be seen that though the initial POST request that creates the resource is not idempotent, the client is able to construct the next request in a way that ensures that they are conditional on the outcome of that request.  This ensures that the transaction does not complete unless all requests are successful.</p>
+<h1 id="rfc.section.1.2">
+<a href="#rfc.section.1.2">1.2.</a> <a href="#conventions-and-definitions" id="conventions-and-definitions">Conventions and Definitions</a>
+</h1>
+<p id="rfc.section.1.2.p.1">The key words &#8220;MUST&#8221;, &#8220;MUST NOT&#8221;, &#8220;REQUIRED&#8221;, &#8220;SHALL&#8221;, &#8220;SHALL NOT&#8221;, &#8220;SHOULD&#8221;, &#8220;SHOULD NOT&#8221;, &#8220;RECOMMENDED&#8221;, &#8220;NOT RECOMMENDED&#8221;, &#8220;MAY&#8221;, and &#8220;OPTIONAL&#8221; in this document are to be interpreted as described in BCP 14 <a href="#RFC2119" class="xref">[RFC2119]</a> <a href="#RFC8174" class="xref">[RFC8174]</a> when, and only when, they appear in all capitals, as shown here.</p>
+<h1 id="rfc.section.1.3">
+<a href="#rfc.section.1.3">1.3.</a> <a href="#terminology" id="terminology">Terminology</a>
+</h1>
+<p id="rfc.section.1.3.p.1">This document uses terminology from HTTP <a href="#HTTP" class="xref">[HTTP]</a>.  The phrase HTTP URI is used to refer to http:// and https:// URIs collectively.  However, this document is only capable of identifying requests that are sent over secured transports.</p>
+<h1 id="rfc.section.2">
+<a href="#rfc.section.2">2.</a> <a href="#overview" id="overview">Overview</a>
+</h1>
+<p id="rfc.section.2.p.1">An <samp>hx</samp> URI identifies an HTTP exchange, or parts of that exchange.  The primary advantage of this in referring to the product of a request before it is completed.</p>
+<p id="rfc.section.2.p.2">A scheme of &#8220;hx&#8221; is followed by an authority that identifies the connection on which the exchange was initiated.  A minimal path includes an identifier for the exchange, as a decimal number.  For instance, assuming that the authority <samp>b5dd5901aef3f33de572</samp> refers to an HTTP/2 connection, the following URI identifies entire exchange on stream 7 of that connection (see <a href="#exchange" class="xref">Section 4</a>).</p>
+<pre>
+hx://b5dd5901aef3f33de572/7
+</pre>
+<p id="rfc.section.2.p.3">Adding additional path elements narrows this to refer to the request (see <a href="#target" class="xref">Section 5</a>):</p>
+<pre>
+hx://b5dd5901aef3f33de572/7/q
+</pre>
+<p id="rfc.section.2.p.4">Further path elements allow components of a message to be identified, such as a Location header field value (see <a href="#component-header-field" class="xref">Section 6.8</a>):</p>
+<pre>
+hx://b5dd5901aef3f33de572/7/a/h/location
+</pre>
+<p id="rfc.section.2.p.5">To ensure that the Location header field is only used if the request resulted in the creation of a new resource (that is, the response had a 201 (Created) status code), conditions can be added to the URI as query parameters:</p>
+<pre>
+hx://b5dd5901aef3f33de572/7/a/h/location?201
+</pre>
+<p id="rfc.section.2.p.6">A fragment can be used if the content has an associated content type that supports fragment identifiers, which is generally only possible for the body of a request or response:</p>
+<pre>
+hx://b5dd5901aef3f33de572/7/a/b#title
+</pre>
+<p id="rfc.section.2.p.7">How a fragment is used depends on the content type of the identified resource, so a condition might be added to specify the content type of the target resource:</p>
+<pre>
+hx://b5dd5901aef3f33de572/7/a/b?ct=text%2Fhtml#title
+</pre>
+<p id="rfc.section.2.p.8">The <samp>hxr</samp> URI scheme is identical to <samp>hx</samp> except that it is dereferenced twice.  A reference that uses the <samp>hxr</samp> scheme can therefore be used where a URI would otherwise be used, taking the value of the URI from chosen part of the identified exchange.</p>
+<h1 id="rfc.section.3">
+<a href="#rfc.section.3">3.</a> <a href="#authority" id="authority">Authority</a>
+</h1>
+<p id="rfc.section.3.p.1">The authority component of an <samp>hx</samp> or <samp>hxr</samp> URI is an identifier for a connection.</p>
+<p id="rfc.section.3.p.2">The process for generating a unique identifier uses TLS exporters (see Section 7.5 of <a href="#TLS13" class="xref">[TLS13]</a>).  Consequently, exchanges on connections that do not use TLS cannot be identified using <samp>hx</samp> or <samp>hxr</samp> URIs.</p>
+<p id="rfc.section.3.p.3">A TLS exporter with the label &#8220;EXPORTER-hx-authority&#8221; and an empty context is used to produce a 10 octet value.  This value is then encoded in hexadecimal (that is, Base 16 <a href="#RFC4648" class="xref">[RFC4648]</a>) to produce a 20 character authority.</p>
+<p id="rfc.section.3.p.4">The authority can be omitted where the identity of the connection can be inferred from context.  For instance, where the URI is sent over the same connection.  The current connection is used if an authority is absent.</p>
+<pre>
+hx:///7
+</pre>
+<p id="rfc.section.3.p.5">The userinfo and port components of an <samp>hx</samp> or <samp>hxr</samp> URI MUST NOT be used.  Any URI with userinfo or port components is invalid.</p>
+<h1 id="rfc.section.4">
+<a href="#rfc.section.4">4.</a> <a href="#exchange" id="exchange">Identifying an Exchange</a>
+</h1>
+<p id="rfc.section.4.p.1">After identifying the connection, the first element of the path after the initial slash (&#8220;/&#8221;) identifies a request-response exchange.</p>
+<p id="rfc.section.4.p.2">A decimal value is used to identify an exchange.  How requests are identified depends on the version of HTTP in use.</p>
+<p id="rfc.section.4.p.3">A single &#8220;p&#8221; character followed by a decimal value is used to identify a server push, see <a href="#exchange-push" class="xref">Section 4.4</a>.</p>
+<p id="rfc.section.4.p.4">An <samp>hx</samp> or <samp>hxr</samp> URI always includes fields that identify an exchange.  For instance, the following URIs are incomplete and therefore invalid:</p>
+<pre>
+hx://
+hx:///
+hx://b5dd5901aef3f33de572/
+</pre>
+<h1 id="rfc.section.4.1">
+<a href="#rfc.section.4.1">4.1.</a> <a href="#exchange11" id="exchange11">Identifying HTTP/1.1 Exchanges</a>
+</h1>
+<p id="rfc.section.4.1.p.1">In HTTP/1.1 <a href="#HTTP11" class="xref">[HTTP11]</a> and earlier, the numeric identifier for an exchange counts the number of exchanges on the connection that precede the target exchange.  The first exchange on a connection is therefore identified as <samp>hx:///0</samp>.  Subsequent requests increment this value by 1.</p>
+<h1 id="rfc.section.4.2">
+<a href="#rfc.section.4.2">4.2.</a> <a href="#exchange2" id="exchange2">Identifying HTTP/2 Exchanges</a>
+</h1>
+<p id="rfc.section.4.2.p.1">In HTTP/2 <a href="#HTTP2" class="xref">[HTTP2]</a>, the numeric identifier for an exchange corresponds to a HTTP/2 stream identifier.  The first exchange on a connection is therefore identified as <samp>hx:///1</samp>.  As a result, all exchanges that are not server pushes use odd-numbered identifiers.</p>
+<h1 id="rfc.section.4.3">
+<a href="#rfc.section.4.3">4.3.</a> <a href="#exchange3" id="exchange3">Identifiers HTTP/3 Exchanges</a>
+</h1>
+<p id="rfc.section.4.3.p.1">In HTTP/3 <a href="#HTTP3" class="xref">[HTTP3]</a>, the numeric identifier for an exchange corresponds to a QUIC stream identifier.  The first exchange on a connection is therefore identified as <samp>hx:///0</samp>.  Consequently, all exchanges that are not server pushes use identifiers that are whole multiples of 4.</p>
+<h1 id="rfc.section.4.4">
+<a href="#rfc.section.4.4">4.4.</a> <a href="#exchange-push" id="exchange-push">Identifying Server Pushes</a>
+</h1>
+<p id="rfc.section.4.4.p.1">A server push exchange is identified by a &#8220;p&#8221; prefix followed by a decimal value.  For example:</p>
+<pre>
+hx:///p6
+</pre>
+<p id="rfc.section.4.4.p.2">In HTTP/2, a stream identifier is sufficient to distinguish between requests and server pushes.  Thus, identifying a server push is possible even if the &#8220;p&#8221; prefix is omitted.  In HTTP/2, all server pushes use even-numbered identifiers.</p>
+<p id="rfc.section.4.4.p.3">Server pushes in HTTP/3 are given a push ID, an identifier that might be the same as the stream ID used for requests.  The push ID is used to identify server push in HTTP/3.  Thus, in HTTP/3, the &#8220;p&#8221; prefix is necessary to properly identify a server push.</p>
+<p id="rfc.section.4.4.p.4">HTTP versions prior to HTTP/2 do not provide server push, so an <samp>hx</samp> URI that attempts to identify a server push cannot be successfully resolved.</p>
+<h1 id="rfc.section.5">
+<a href="#rfc.section.5">5.</a> <a href="#target" id="target">Targets</a>
+</h1>
+<p id="rfc.section.5.p.1">Without further qualification, an <samp>hx</samp> URI identifies a message exchange, both the request and the response as a whole.  Applications can narrow this to a request (<a href="#target-request" class="xref">Section 5.1</a>) or response (<a href="#target-response" class="xref">Section 5.2</a>).</p>
+<p id="rfc.section.5.p.2">A <samp>hxr</samp> URI always identifies a request or response, it cannot identify a complete exchange.</p>
+<h1 id="rfc.section.5.1">
+<a href="#rfc.section.5.1">5.1.</a> <a href="#target-request" id="target-request">Identifying a Request</a>
+</h1>
+<p id="rfc.section.5.1.p.1">A request is identified by adding &#8220;/q&#8221; to a URI identifying an exchange.  For example:</p>
+<pre>
+hx://546c9bce274b06cf859d/84/q
+</pre>
+<h1 id="rfc.section.5.2">
+<a href="#rfc.section.5.2">5.2.</a> <a href="#target-response" id="target-response">Identifying a Response</a>
+</h1>
+<p id="rfc.section.5.2.p.1">A response is identified by adding &#8220;/a&#8221; to a URI identifying an exchange.  For example:</p>
+<pre>
+hx://18660225619af2c6c300/173/a
+</pre>
+<h1 id="rfc.section.5.3">
+<a href="#rfc.section.5.3">5.3.</a> <a href="#redirections" id="redirections">Redirections</a>
+</h1>
+<p id="rfc.section.5.3.p.1">An <samp>hx</samp> or <samp>hxr</samp> URI applies to a single exchange over a single connection.  If a 3xx status code results in a client following a redirect, that exchange is identified separately.</p>
+<h1 id="rfc.section.6">
+<a href="#rfc.section.6">6.</a> <a href="#component" id="component">Identifying Request or Response Components</a>
+</h1>
+<p id="rfc.section.6.p.1">After identifying a single message, additional path components can be used to identify parts of the message.</p>
+<p></p>
+
+<dl>
+<dt>TBD:</dt>
+<dd style="margin-left: 8">It might make sense to put &#8220;/m&#8221;, &#8220;/u&#8221;, &#8220;/s&#8221;, and &#8220;/i&#8221; as peers to &#8220;/q&#8221; and &#8220;/a&#8221; rather than attaching them underneath.  The primary advantage would be a shorter identifier.  (Doing this for &#8220;/i&#8221; alone might work, as that is more of a peer to &#8220;/a&#8221;.)</dd>
+</dl>
+<h1 id="rfc.section.6.1">
+<a href="#rfc.section.6.1">6.1.</a> <a href="#component-method" id="component-method">Identifying the Request Method</a>
+</h1>
+<p id="rfc.section.6.1.p.1">A path component of &#8220;/m&#8221; indicates that an &#8216;hx&#8217; URI identifies the request method.  This component is not valid for an <samp>hxr</samp> URI or an <samp>hx</samp> URI that identifies a response.</p>
+<h1 id="rfc.section.6.2">
+<a href="#rfc.section.6.2">6.2.</a> <a href="#component-uri" id="component-uri">Identifying the Effective Request URI</a>
+</h1>
+<p id="rfc.section.6.2.p.1">A path component of &#8220;/u&#8221; indicates that an &#8216;hx&#8217; or <samp>hxr</samp> URI identifies the effective request URI (see Section 5.3 of <a href="#HTTP" class="xref">[HTTP]</a>).</p>
+<h1 id="rfc.section.6.3">
+<a href="#rfc.section.6.3">6.3.</a> <a href="#component-status" id="component-status">Identifying the Response Status</a>
+</h1>
+<p id="rfc.section.6.3.p.1">A path component of &#8220;/s&#8221; indicates that an &#8216;hx&#8217; URI identifies the response status.  This component is not valid for an <samp>hxr</samp> URI or an <samp>hx</samp> URI for a request.</p>
+<h1 id="rfc.section.6.4">
+<a href="#rfc.section.6.4">6.4.</a> <a href="#component-body" id="component-body">Identifying the Message Body</a>
+</h1>
+<p id="rfc.section.6.4.p.1">A path component of &#8220;/b&#8221; identifies the body of the message.  A body can be identified for both <samp>hx</samp> and <samp>hxr</samp> URIs.</p>
+<p id="rfc.section.6.4.p.2">Identifying the body of a message without a body (like a GET request or a 204 (No Content) response) successfully identifies the empty body.</p>
+<h1 id="rfc.section.6.5">
+<a href="#rfc.section.6.5">6.5.</a> <a href="#component-informational" id="component-informational">Informational (1xx) Responses</a>
+</h1>
+<p id="rfc.section.6.5.p.1">The &#8220;/i&#8221; path component can be used to select informational responses.</p>
+<p id="rfc.section.6.5.p.2">The &#8220;/i&#8221; component is followed by a path component that identifies which informational responses to select.  If this contains a decimal value, this indicates the number of the informational response to select.  The first information response is identified with &#8220;0&#8221;, with subsequent information responses each using a number 1 greater than the last.  A value of &#8220;@&#8221; is used to identify the last informational response and a value of &#8220;*&#8221; identifies all informational responses.</p>
+<p></p>
+
+<dl>
+<dt>TBD:</dt>
+<dd style="margin-left: 8">Indexing is a little strange given the use case here.  The problem lies in working out what to do with multiple entries.  Maybe the right answer is to allow for selecting just the first, last, or all items.  That would simplify the scheme a little.</dd>
+</dl>
+<p id="rfc.section.6.5.p.4">Indexing applies after any conditions are applied (see <a href="#condition" class="xref">Section 7</a>), allowing a URI to identify single informational response.</p>
+<p id="rfc.section.6.5.p.5">For example, the following <samp>hx</samp> URIs refer to the third 103 response, the last informational response containing a Link header field, and all informational responses respectively.</p>
+<pre>
+hx:///71/a/i/2?103
+hx:///71/a/i/@?h=link
+hx:///71/a/i/*
+</pre>
+<p id="rfc.section.6.5.p.6">The path components &#8220;/s&#8221; (<a href="#component-status" class="xref">Section 6.3</a>) or &#8220;/h&#8221; (<a href="#component-header" class="xref">Section 6.6</a>) can be used to select parts of an informational response.  For example, all Link header fields from informational responses can be collected with:</p>
+<pre>
+hx:///10/a/i/*/h/link/*
+</pre>
+<h1 id="rfc.section.6.6">
+<a href="#rfc.section.6.6">6.6.</a> <a href="#component-header" id="component-header">Identifying a Message Header</a>
+</h1>
+<p id="rfc.section.6.6.p.1">A path component of &#8220;/h&#8221; identifies the header of a message as a whole.  When preceded by &#8220;/i&#8221;, this identifies the header of the informational response (see <a href="#component-informational" class="xref">Section 6.5</a>).  When not preceded by &#8220;/i&#8221; it refers to the header from requests and final responses.</p>
+<p id="rfc.section.6.6.p.2">Without additional path elements, this form is only valid for an <samp>hx</samp> URI; an <samp>hxr</samp> URI requires that specific header fields be identified.</p>
+<h1 id="rfc.section.6.7">
+<a href="#rfc.section.6.7">6.7.</a> <a href="#component-trailer" id="component-trailer">Identifying a Message Trailer</a>
+</h1>
+<p id="rfc.section.6.7.p.1">A path component of &#8220;/t&#8221; specifically identifies the trailer of a message.  Trailers are subject to the same restrictions as headers with the additional condition that they can&#8217;t be present on informational responses.</p>
+<h1 id="rfc.section.6.8">
+<a href="#rfc.section.6.8">6.8.</a> <a href="#component-header-field" id="component-header-field">Identifying Header Field Values</a>
+</h1>
+<p id="rfc.section.6.8.p.1">Adding a path component containing the name of a header field to a path that identifies the a header (&#8220;/h&#8221; or &#8220;/i/&#8230;/h&#8221;) or trailer (&#8220;/t&#8221;) from a message selects that header field only.</p>
+<p id="rfc.section.6.8.p.2">The next path component indexes header field values, just like informational responses are indexed (see <a href="#component-informational" class="xref">Section 6.5</a>).  All values from the message are identified by &#8220;*&#8221;.  A decimal value indicates a 0-based index into values.  The last value is identified by &#8220;@&#8221;.</p>
+<p id="rfc.section.6.8.p.3">Values that use the HTTP list construction are not indexed by instances of the header field, but by the comma-separated values that are present.  Empty values or those containing only whitespace are skipped and cannot be indexed.</p>
+<p id="rfc.section.6.8.p.4">To illustrate this, there are 4 values that can be indexed in the following HTTP/1.1 example. The third value is &#8220;3&#8221; and the last (&#8220;/@&#8221;) is &#8220;4&#8221;.</p>
+<pre>
+Example: 1
+Example: 2, ,3
+Example: ,4,
+</pre>
+<p id="rfc.section.6.8.p.5">As a special case, an <samp>hxr</samp> URI that refers to the value of a Link header field <a href="#LINK" class="xref">[LINK]</a> can be used as a reference.</p>
+<h1 id="rfc.section.7">
+<a href="#rfc.section.7">7.</a> <a href="#condition" id="condition">Conditions</a>
+</h1>
+<p id="rfc.section.7.p.1">The query string of an <samp>hx</samp> URI carries a set of conditions.  Unless any conditions evaluate to true, the resolution of the URI will fail.  This allows for specification of URIs that are conditional on details of the HTTP exchange.</p>
+<p id="rfc.section.7.p.2">For example, the following URI cannot be dereferenced unless the response indicates success, ensuring that the body of an unwanted response like 503 is not used:</p>
+<pre>
+hx://b5dd5901aef3f33de572/7/a/b?2xx
+</pre>
+<p id="rfc.section.7.p.3">Conditions are separated by the ampersand (&#8220;&amp;&#8221;) character.  Each comprises a label that identifies the type of the condition, and an optional value.  The value is separated from the label by an equals sign (&#8220;=&#8221;) character.</p>
+<p id="rfc.section.7.p.4">This document defines conditions for status code (<a href="#condition-status" class="xref">Section 7.3</a>), header field values (<a href="#condition-header" class="xref">Section 7.4</a>), response content-type (<a href="#condition-ct" class="xref">Section 7.5</a>), and link relation (<a href="#condition-rel" class="xref">Section 7.6</a>).  Conditions that are not understood always evaluate to false, causing resolution to fail.</p>
+<h1 id="rfc.section.7.1">
+<a href="#rfc.section.7.1">7.1.</a> <a href="#condition-processing" id="condition-processing">Condition Processing Model</a>
+</h1>
+<p id="rfc.section.7.1.p.1">Conditions are potentially processed multiple times.</p>
+<p id="rfc.section.7.1.p.2">Multiple values can be produced for informational responses and header fields.  In each case, when multiple values are produced, conditions are evaluated.  This might reduce the number of options.  If multiple values remain, all options are considered when evaluating the remainder of the URI path.</p>
+<p id="rfc.section.7.1.p.3">For instance, a Link header field <a href="#LINK" class="xref">[LINK]</a> might appear multiple times and in multiple informational responses.  The Link Relation Type condition (<a href="#condition-rel" class="xref">Section 7.6</a>) might be used to select all link relations of a given type across all informational responses.</p>
+<pre>
+hx:///29/a/i/*/h/link/*?rel=start
+</pre>
+<h1 id="rfc.section.7.2">
+<a href="#rfc.section.7.2">7.2.</a> <a href="#condition-pct-encoding" id="condition-pct-encoding">Percent-Encoding of Condition Values</a>
+</h1>
+<p id="rfc.section.7.2.p.1">The URI grammar <a href="#URI" class="xref">[URI]</a> prohibits the use of certain characters in the query string.  This scheme uses percent-encoding to allow conditions to carry values that are not permitted by the URI grammar.  Section 2.1 of <a href="#URI" class="xref">[URI]</a> defines percent-encoding.  The <samp>hx-pct-encoded</samp> rule in <a href="#grammar-hx" class="xref">Section 8</a> defines the characters that don&#8217;t require encoding; all other values MUST be percent-encoded.</p>
+<h1 id="rfc.section.7.3">
+<a href="#rfc.section.7.3">7.3.</a> <a href="#condition-status" id="condition-status">Status Condition</a>
+</h1>
+<p id="rfc.section.7.3.p.1">Any condition that starts with a numeral from &#8220;1&#8221; to &#8220;5&#8221; is used to specify a condition on the response status.</p>
+<p id="rfc.section.7.3.p.2">If the condition contains three digits, the condition evaluates to true if the response contained a matching status code.</p>
+<p id="rfc.section.7.3.p.3">A condition that contains a numeral and two &#8220;x&#8221; characters evaluates to true if the status code is from the identified class.  For instance, the following identifies a request that was redirected:</p>
+<pre>
+hx:///22/q?3xx
+</pre>
+<p id="rfc.section.7.3.p.4">A condition that specifies an informational status code (1xx) will be true if an informational response of that type was present.  It does not result in limiting the components that can be selected.  Specific 100-series status codes can be used to limit which informational responses are selected if the &#8220;/i&#8221; path component is used (see <a href="#component-informational" class="xref">Section 6.5</a>).</p>
+<p id="rfc.section.7.3.p.5">A URI that identifies a header field will resolve the final value of the header field unless a specific portion of the response is specified (using &#8220;/i&#8221; or &#8220;/t&#8221;), taking into account values from final responses and trailers as defined in <a href="#component-header" class="xref">Section 6.6</a>.</p>
+<p id="rfc.section.7.3.p.6">This condition can be used to identify components of a request, conditional on the status code of the response.</p>
+<p id="rfc.section.7.3.p.7">New condition definitions MUST NOT start with a numeral from &#8220;1&#8221; and &#8220;5&#8221;.</p>
+<h1 id="rfc.section.7.4">
+<a href="#rfc.section.7.4">7.4.</a> <a href="#condition-header" id="condition-header">Header Field Value Condition</a>
+</h1>
+<p id="rfc.section.7.4.p.1">The header field condition is identified with a &#8220;h&#8221; token.  A &#8220;h=&#8221; is followed by the name of the header field.  With no further values, this condition is satisfied if a header field with the same name is present in the identified part of the message.  An additional &#8220;=&#8221; character can be added, which causes the condition to be true only when the value of the header field is equal to the remainder of the condition.</p>
+<p id="rfc.section.7.4.p.2">This condition applies to any header field from the identified object.  Thus, if the URI does not specify whether a request or response, the condition is met based on the presence or value of the header or trailer field in request or response, including informational responses.  If the target of the URI is a request, response, or informational response, then only header and trailer fields in the corresponding part of the message apply.  For instance, if the URI identies the header, then only header fields are used to match.</p>
+<p id="rfc.section.7.4.p.3">Thus, to identify a request if it contains a User-Agent header field with any value, the following might be used:</p>
+<pre>
+hx:///30/q?h=user-agent
+</pre>
+<p id="rfc.section.7.4.p.4">To select a response body only if it indicates that requests for byte ranges are supported, the following might be used:</p>
+<pre>
+hx:///71/a/b?h=accept-ranges=bytes
+</pre>
+<p id="rfc.section.7.4.p.5">Alternative forms of matching aside from equality might be provided in future.</p>
+<h1 id="rfc.section.7.5">
+<a href="#rfc.section.7.5">7.5.</a> <a href="#condition-ct" id="condition-ct">Response Content Type Condition</a>
+</h1>
+<p id="rfc.section.7.5.p.1">The response content type condition matches if the content type of the response matches the specified content type.  Acceptable values and rules for determining what values match follow the rules for the Accept header field (see Section 8.4.2 of <a href="#HTTP" class="xref">[HTTP]</a>).</p>
+<p id="rfc.section.7.5.p.2">The response content type condition is identified by &#8220;ct&#8221; and is followed by a percent-encoded content type.  For example:</p>
+<pre>
+hx:///12/a/b?ct=text%2Fhtml
+</pre>
+<p id="rfc.section.7.5.p.3">Unlike the header field condition (<a href="#condition-header" class="xref">Section 7.4</a>), the response content type condition can be used with URIs that identify components of a request.  In that case, it indicates that the identification is conditional on the content type of the response (not the request).</p>
+<p id="rfc.section.7.5.p.4">Separator characters (&#8220;/&#8221;, &#8220;;&#8221; and &#8220;,&#8221;) MUST be percent-encoded in the value of this condition.</p>
+<h1 id="rfc.section.7.6">
+<a href="#rfc.section.7.6">7.6.</a> <a href="#condition-rel" id="condition-rel">Link Relation Condition</a>
+</h1>
+<p id="rfc.section.7.6.p.1">A link relation condition filters results by those that contain a link relation <a href="#LINK" class="xref">[LINK]</a> of the specified type.</p>
+<p id="rfc.section.7.6.p.2">The link relation condition is identified by &#8220;rel&#8221; and is followed by a link relation type.  Link relations that include non-token characters, such as those that use the URL form, MUST be percent-encoded.</p>
+<p id="rfc.section.7.6.p.3">If the target is a request, response, informational response, or component that contains header fields, only those messages or parts of messages that contain a link relation of the specified type are selected.</p>
+<p id="rfc.section.7.6.p.4">If the target is a Link header field, then only link relations of the identified type are selected.  Deferencing fails if any other header field is identified.</p>
+<h1 id="rfc.section.8">
+<a href="#rfc.section.8">8.</a> <a href="#grammar-hx" id="grammar-hx">hx URI Grammar</a>
+</h1>
+<p id="rfc.section.8.p.1">In ABNF <a href="#RFC5234" class="xref">[RFC5234]</a>, the <samp>hx</samp> URI scheme can be described as a narrow profile of that defined in <a href="#URI" class="xref">[URI]</a>.</p>
+<pre>
+hx-URI = "hx://" [ hx-authority ] hx-exchange
+         [ hx-target ] [ hx-conditions ]
+hx-authority = 20HEXDIG
+hx-exchange = "/" [ "p" ] 1*DIGIT
+
+hx-target = hx-request / hx-response
+hx-request = "/q" [ "/" hx-component ]
+hx-response = "/a" [ "/" hx-component ]
+
+hx-component = hx-method / hx-uri / hx-info
+             / hx-header / hx-body / hx-trailer
+hx-method = "/m"
+hx-uri = "/u"
+hx-info = "/i/" hx-index [ hx-status / hx-header ]
+hx-status = "/s"
+hx-header = "/h" [ "/" hx-token [ "/" hx-index ] ]
+hx-body = "/b"
+hx-trailer = "/t" [ "/" hx-token [ "/" hx-index ] ]
+
+hx-index = 1*DIGIT / "@" / "*"
+hx-token = 1*hx-token-char
+hx-token-char = "-" / "." / "_" / DIGIT / ALPHA
+
+hx-conditions = "?" hx-condition *("&amp;" hx-condition)
+hx-condition = hx-status-cond / hx-header-cond
+             / hx-ct-cond / hx-extension-cond
+hx-status-cond = ("1" / "2" / "3" / "4" / "5") (2DIGIT / "xx")
+hx-header-cond = "h=" hx-token [ "=" hx-pct-encoded ]
+hx-ct-cond = "ct=" hx-pct-encoded
+hx-extension-cond = hx-token [ "=" hx-pct-encoded ]
+
+hx-pct-encoded = *( hx-token-char / ("%" 2HEXDIG) )
+</pre>
+<h1 id="rfc.section.9">
+<a href="#rfc.section.9">9.</a> <a href="#grammar-hxr" id="grammar-hxr">hxr URI Grammar</a>
+</h1>
+<p id="rfc.section.9.p.1">The <samp>hxr</samp> URI scheme uses the same basic grammar as the <samp>hx</samp> URI scheme.  However, since this can only ever reference parts of an exchange that could contain a URI, the grammar is more narrowly defined.</p>
+<pre>
+hxr-URI = "hxr://" [ hx-authority ] "/" hx-exchange
+         hxr-target [ "?" hx-conditions ]
+
+hxr-targets = hxr-request / hxr-response
+hxr-request = "/q/" hxr-component
+hxr-response = "/a/" hxr-component
+
+hxr-component = hx-uri / hxr-info
+              / hxr-header / hx-body / hxr-trailer
+hxr-info = "/i/" hx-index hxr-header
+hxr-header = "/h/" hx-token [ "/" hx-index ]
+hxr-trailer = "/t/" hx-token [ "/" hx-index ]
+</pre>
+<p id="rfc.section.9.p.2">The main difference between the <samp>hx</samp> and <samp>hxr</samp> schemes is that <samp>hxr</samp> URIs contain a narrower set of possible values, omitting all means of identifying parts of a request that cannot produce a URI.</p>
+<h1 id="rfc.section.10">
+<a href="#rfc.section.10">10.</a> <a href="#security-considerations" id="security-considerations">Security Considerations</a>
+</h1>
+<p id="rfc.section.10.p.1">Resolution of details of unfulfilled requests could present a significant state commitment on servers.  Servers that receive requests that depend on other requests might have to block processing until the outcome of the referenced requests is complete.  Alternatively, servers might need to hold information about completed requests in anticipation of receiving references to that request.</p>
+<p id="rfc.section.10.p.2">Servers can fail resolution of <samp>hx</samp> or <samp>hxr</samp> URIs if the state required would present an undue burden on their operation.  Servers might limit the types of information that can be retained and referenced to reduce this cost.</p>
+<p id="rfc.section.10.p.3">Applications that use these URI schemes MUST define what types of reference a server is expected to be able to handle, or provide a means of negotiating what can be relied on.</p>
+<h1 id="rfc.section.11">
+<a href="#rfc.section.11">11.</a> <a href="#iana-considerations" id="iana-considerations">IANA Considerations</a>
+</h1>
+<p id="rfc.section.11.p.1">This document registers the <samp>hx</samp> and <samp>hxr</samp> URI schemes.  In support of this, registrations are made in the TLS exporters registry (<a href="#iana-exporter" class="xref">Section 11.3</a>) and registries are established for managing the parameters of the URI schemes (<a href="#iana-registries" class="xref">Section 11.4</a>).</p>
+<h1 id="rfc.section.11.1">
+<a href="#rfc.section.11.1">11.1.</a> <a href="#iana-hx" id="iana-hx">hx URI scheme Registration</a>
+</h1>
+<p id="rfc.section.11.1.p.1">The <samp>hx</samp> URI scheme is registered according to the procedures in <a href="#BCP35" class="xref">[BCP35]</a>.</p>
+<p></p>
+
+<dl>
+<dt>Scheme name:</dt>
+<dd style="margin-left: 8">hx</dd>
+<dt>Status:</dt>
+<dd style="margin-left: 8">Permanent/Provisional</dd>
+<dt>Applications/protocols that use this scheme name:</dt>
+<dd style="margin-left: 8">Applications use URIs with this scheme to identify HTTP exchanges, requests, responses, or components of those messages.</dd>
+<dt>Contact:</dt>
+<dd style="margin-left: 8">IETF Chair <a href="mailto:chair@ietf.org">chair@ietf.org</a>
+</dd>
+<dt>Change controller:</dt>
+<dd style="margin-left: 8">IESG <a href="mailto:iesg@ietf.org">iesg@ietf.org</a>
+</dd>
+<dt>Reference:</dt>
+<dd style="margin-left: 8">This document.</dd>
+</dl>
+<h1 id="rfc.section.11.2">
+<a href="#rfc.section.11.2">11.2.</a> <a href="#iana-hxr" id="iana-hxr">hxr URI scheme Registration</a>
+</h1>
+<p id="rfc.section.11.2.p.1">The <samp>hxr</samp> URI scheme is registered according to the procedures in <a href="#BCP35" class="xref">[BCP35]</a>.</p>
+<p></p>
+
+<dl>
+<dt>Scheme name:</dt>
+<dd style="margin-left: 8">hxr</dd>
+<dt>Status:</dt>
+<dd style="margin-left: 8">Permanent/Provisional</dd>
+<dt>Applications/protocols that use this scheme name:</dt>
+<dd style="margin-left: 8">Applications use URIs with this scheme in place of URIs where the intended URI is found in a component of an HTTP exchange.</dd>
+<dt>Contact:</dt>
+<dd style="margin-left: 8">IETF Chair <a href="mailto:chair@ietf.org">chair@ietf.org</a>
+</dd>
+<dt>Change controller:</dt>
+<dd style="margin-left: 8">IESG <a href="mailto:iesg@ietf.org">iesg@ietf.org</a>
+</dd>
+<dt>Reference:</dt>
+<dd style="margin-left: 8">This document.</dd>
+</dl>
+<h1 id="rfc.section.11.3">
+<a href="#rfc.section.11.3">11.3.</a> <a href="#iana-exporter" id="iana-exporter">TLS Exporter Registration</a>
+</h1>
+<p id="rfc.section.11.3.p.1">TODO</p>
+<h1 id="rfc.section.11.4">
+<a href="#rfc.section.11.4">11.4.</a> <a href="#iana-registries" id="iana-registries">hx and hxr URI Scheme Registries</a>
+</h1>
+<p id="rfc.section.11.4.p.1">TODO considering setting up registries for various bits of the syntax.</p>
+<h1 id="rfc.references">
+<a href="#rfc.references">12.</a> References</h1>
+<h1 id="rfc.references.1">
+<a href="#rfc.references.1">12.1.</a> Normative References</h1>
+<table><tbody>
+<tr>
+<td class="reference"><b id="BCP35">[BCP35]</b></td>
+<td class="top">
+<a>Thaler, D.</a>, <a>Hansen, T.</a> and <a>T. Hardie</a>, "<a href="https://tools.ietf.org/html/rfc7595">Guidelines and Registration Procedures for URI Schemes</a>", BCP 35, RFC 7595, DOI 10.17487/RFC7595, June 2015.</td>
+</tr>
+<tr>
+<td class="reference"><b id="HTTP">[HTTP]</b></td>
+<td class="top">
+<a>Fielding, R.</a>, <a>Nottingham, M.</a> and <a>J. Reschke</a>, "<a href="https://tools.ietf.org/html/draft-ietf-httpbis-semantics-03">HTTP Semantics</a>", Internet-Draft draft-ietf-httpbis-semantics-03, October 2018.</td>
+</tr>
+<tr>
+<td class="reference"><b id="HTTP11">[HTTP11]</b></td>
+<td class="top">
+<a>Fielding, R.</a>, <a>Nottingham, M.</a> and <a>J. Reschke</a>, "<a href="https://tools.ietf.org/html/draft-ietf-httpbis-messaging-03">HTTP/1.1 Messaging</a>", Internet-Draft draft-ietf-httpbis-messaging-03, October 2018.</td>
+</tr>
+<tr>
+<td class="reference"><b id="HTTP2">[HTTP2]</b></td>
+<td class="top">
+<a>Belshe, M.</a>, <a>Peon, R.</a> and <a>M. Thomson</a>, "<a href="https://tools.ietf.org/html/rfc7540">Hypertext Transfer Protocol Version 2 (HTTP/2)</a>", RFC 7540, DOI 10.17487/RFC7540, May 2015.</td>
+</tr>
+<tr>
+<td class="reference"><b id="HTTP3">[HTTP3]</b></td>
+<td class="top">
+<a>Bishop, M.</a>, "<a href="https://tools.ietf.org/html/draft-ietf-quic-http-18">Hypertext Transfer Protocol Version 3 (HTTP/3)</a>", Internet-Draft draft-ietf-quic-http-18, January 2019.</td>
+</tr>
+<tr>
+<td class="reference"><b id="LINK">[LINK]</b></td>
+<td class="top">
+<a>Nottingham, M.</a>, "<a href="https://tools.ietf.org/html/rfc8288">Web Linking</a>", RFC 8288, DOI 10.17487/RFC8288, October 2017.</td>
+</tr>
+<tr>
+<td class="reference"><b id="RFC2119">[RFC2119]</b></td>
+<td class="top">
+<a>Bradner, S.</a>, "<a href="https://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a>", BCP 14, RFC 2119, DOI 10.17487/RFC2119, March 1997.</td>
+</tr>
+<tr>
+<td class="reference"><b id="RFC4648">[RFC4648]</b></td>
+<td class="top">
+<a>Josefsson, S.</a>, "<a href="https://tools.ietf.org/html/rfc4648">The Base16, Base32, and Base64 Data Encodings</a>", RFC 4648, DOI 10.17487/RFC4648, October 2006.</td>
+</tr>
+<tr>
+<td class="reference"><b id="RFC5234">[RFC5234]</b></td>
+<td class="top">
+<a>Crocker, D.</a> and <a>P. Overell</a>, "<a href="https://tools.ietf.org/html/rfc5234">Augmented BNF for Syntax Specifications: ABNF</a>", STD 68, RFC 5234, DOI 10.17487/RFC5234, January 2008.</td>
+</tr>
+<tr>
+<td class="reference"><b id="RFC8174">[RFC8174]</b></td>
+<td class="top">
+<a>Leiba, B.</a>, "<a href="https://tools.ietf.org/html/rfc8174">Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words</a>", BCP 14, RFC 8174, DOI 10.17487/RFC8174, May 2017.</td>
+</tr>
+<tr>
+<td class="reference"><b id="TLS13">[TLS13]</b></td>
+<td class="top">
+<a>Rescorla, E.</a>, "<a href="https://tools.ietf.org/html/rfc8446">The Transport Layer Security (TLS) Protocol Version 1.3</a>", RFC 8446, DOI 10.17487/RFC8446, August 2018.</td>
+</tr>
+<tr>
+<td class="reference"><b id="URI">[URI]</b></td>
+<td class="top">
+<a>Berners-Lee, T.</a>, <a>Fielding, R.</a> and <a>L. Masinter</a>, "<a href="https://tools.ietf.org/html/rfc3986">Uniform Resource Identifier (URI): Generic Syntax</a>", STD 66, RFC 3986, DOI 10.17487/RFC3986, January 2005.</td>
+</tr>
+</tbody></table>
+<h1 id="rfc.references.2">
+<a href="#rfc.references.2">12.2.</a> Informative References</h1>
+<table><tbody><tr>
+<td class="reference"><b id="RFC6901">[RFC6901]</b></td>
+<td class="top">
+<a>Bryan, P.</a>, <a>Zyp, K.</a> and <a>M. Nottingham</a>, "<a href="https://tools.ietf.org/html/rfc6901">JavaScript Object Notation (JSON) Pointer</a>", RFC 6901, DOI 10.17487/RFC6901, April 2013.</td>
+</tr></tbody></table>
+<h1 id="rfc.acknowledgments"><a href="#rfc.acknowledgments">Acknowledgments</a></h1>
+<p id="rfc.section.A.p.1">TODO acknowledge.</p>
+<h1 id="rfc.authors"><a href="#rfc.authors">Author's Address</a></h1>
+<div class="avoidbreak">
+  <address class="vcard">
+	<span class="vcardline">
+	  <span class="fn">Martin Thomson</span> 
+	  <span class="n hidden">
+		<span class="family-name">Thomson</span>
+	  </span>
+	</span>
+	<span class="org vcardline">Mozilla</span>
+	<span class="adr">
+	  
+	  <span class="vcardline">
+		<span class="locality"></span> 
+		<span class="region"></span>
+		<span class="code"></span>
+	  </span>
+	  <span class="country-name vcardline"></span>
+	</span>
+	<span class="vcardline">EMail: <a href="mailto:mt@lowentropy.net">mt@lowentropy.net</a></span>
+
+  </address>
+</div>
+
+</body>
+</html>
