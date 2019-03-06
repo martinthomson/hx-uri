@@ -243,7 +243,7 @@ identified as `hx:///1`.  As a result, all exchanges that are not server pushes
 use odd-numbered identifiers.
 
 
-## Identifiers HTTP/3 Exchanges (#exchange3}
+## Identifiers HTTP/3 Exchanges {#exchange3}
 
 In HTTP/3 {{!HTTP3=I-D.ietf-quic-http}}, the numeric identifier for an exchange
 corresponds to a QUIC stream identifier.  The first exchange on a connection is
@@ -294,7 +294,7 @@ hx://546c9bce274b06cf859d/84/q
 
 ## Identifying a Response {#target-response}
 
-A request is identified by adding "/a" to a URI identifying an exchange.  For
+A response is identified by adding "/a" to a URI identifying an exchange.  For
 example:
 
 ~~~
@@ -337,8 +337,8 @@ effective request URI (see Section 5.3 of {{!HTTP}}).
 
 ## Identifying the Response Status {#component-status}
 
-A path component of "/s" indicates that an 'hx' URI identifies the request
-method.  This component is not valid for an `hxr` URI or an `hx` URI for a
+A path component of "/s" indicates that an 'hx' URI identifies the response
+status.  This component is not valid for an `hxr` URI or an `hx` URI for a
 request.
 
 
@@ -457,9 +457,9 @@ label that identifies the type of the condition, and an optional value.  The
 value is separated from the label by an equals sign ("=") character.
 
 This document defines conditions for status code ({{condition-status}}), header
-field values ({{condition-header}}), and response content-type
-({{condition-ct}}).  Conditions that are not understood always evaluate to
-false, causing resolution to fail.
+field values ({{condition-header}}), response content-type
+({{condition-ct}}), and link relation ({{condition-rel}}).  Conditions that are
+not understood always evaluate to false, causing resolution to fail.
 
 
 ## Condition Processing Model {#condition-processing}
